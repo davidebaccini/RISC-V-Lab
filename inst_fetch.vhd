@@ -57,6 +57,15 @@ begin
             pc      => internal_pc,
             next_pc => next_pc
         );
+        your_instance_name : bram
+        PORT MAP (
+          clka => clka,
+          ena => ena,
+          wea => wea,
+          addra => addra,
+          dina => dina,
+          douta => douta
+        );
 
     curr_pc <= internal_pc;
 
