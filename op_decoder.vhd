@@ -21,7 +21,7 @@ entity op_decoder is
         RET:    out std_logic;
         BEQ:    out std_logic
     );
-end entity
+end entity;
 
 architecture behavioral of op_decoder is
 
@@ -34,5 +34,7 @@ architecture behavioral of op_decoder is
     begin
         process(CLK, RST) begin
             if falling_edge(RST) then
-
+            end if;
+        end process;
+    end architecture;
             
