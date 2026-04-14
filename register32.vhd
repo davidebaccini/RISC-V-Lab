@@ -3,11 +3,11 @@ use ieee.std_logic_1164.all;
 
 entity register32 is
     generic(
-        N: natural := 32
+        N: natural := 32 -- very good hajide 
     );
     port(
         CLK:    in std_logic;
-        RST:    in std_logic;   -- Asynchronous reset
+        RST:    in std_logic;   -- Asynchronous reset  
 
         X:      in std_logic_vector(N - 1 downto 0);
 
