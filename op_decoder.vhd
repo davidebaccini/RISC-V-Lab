@@ -25,11 +25,11 @@ end entity;
 
 architecture behavioral of op_decoder is
 
-    constant ARITH: std_logic_vector := "011 0011";
-    constant LOGIC: std_logic_vector := "011 0011";
-    constant ADDI: std_logic_vector := "001 0011";
-    constant LOAD: std_logic_vector := "000 0011";
-    constant STORE: std_logic_vector := "010 0011";
+    constant ARITH: std_logic_vector := "0110011";
+    constant LOGIC: std_logic_vector := "0110011";
+    constant ADDI2: std_logic_vector := "0010011";
+    constant LOAD: std_logic_vector := "0000011";
+    constant STORE: std_logic_vector := "0100011";
 
     begin
         process(CLK, RST) begin

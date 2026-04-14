@@ -8,7 +8,7 @@ entity inst_fetch is
         pc_load     : in std_logic;                     
         pc_in       : in std_logic_vector(11 downto 0); 
         next_pc     : out std_logic_vector(11 downto 0);
-        curr_pc     : out std_logic_vector(11 downto 0);-- PC attuale
+        curr_pc     : out std_logic_vector(11 downto 0);
         instruction : out std_logic_vector(31 downto 0) 
     );
 end entity;
@@ -30,6 +30,16 @@ architecture Behavioral of inst_fetch is
             next_pc : out std_logic_vector(11 downto 0)
         );
     end component;
+    COMPONENT bram
+        PORT (
+            clka : IN STD_LOGIC;
+            ena : IN STD_LOGIC;
+            wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+            addra : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+            dina : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+            douta : OUT STD_LOGIC_VECTOR(15 DOWNTO 0) 
+        );
+    END COMPONENT;
 
     signal internal_pc : std_logic_vector(11 downto 0);
 

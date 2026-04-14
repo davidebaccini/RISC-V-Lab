@@ -1,0 +1,9 @@
+[libraries]
+blk_mem_gen_v8_4_12.files = [
+    'C:/Xilinx/Vivado/202X.X/data/ip/xilinx/blk_mem_gen_v8_4/hdl/blk_mem_gen_v8_4_vh_rfs.vhd'
+]
+
+# Aggiungi anche i tuoi file di progetto
+work.files = [
+    'src/*.vhd'
+]
