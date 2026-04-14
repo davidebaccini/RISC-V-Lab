@@ -3,38 +3,32 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity op_decoder is
+    generic(
+        N: natural := 32
+    );
     port(
-        CLK:    in std_logic;
-        RST:    in std_logic;
-
-        OP:     in std_logic_vector(6 downto 0);
-        F3:     in std_logic_vector(2 downto 0);
-        F7:     in std_logic_vector(6 downto 0);
-
-        ADD:    out std_logic;
-        ADDI:   out std_logic;
-        NEG:    out std_logic;
-        SUB:    out std_logic;
-        LW:     out std_logic;
-        SW:     out std_logic;
-        J:      out std_logic;
-        RET:    out std_logic;
-        BEQ:    out std_logic
+        INSTRUCTION:    in std_logic_vector(N - 1 downto 0);
+        
+        
     );
 end entity;
 
 architecture behavioral of op_decoder is
 
-    constant ARITH: std_logic_vector := "011 0011";
-    constant LOGIC: std_logic_vector := "011 0011";
-    constant ADDI: std_logic_vector := "001 0011";
-    constant LOAD: std_logic_vector := "000 0011";
-    constant STORE: std_logic_vector := "010 0011";
+    -- All opcodes that we will use in this architecture
+    constant ARITH: std_logic_vector(6 downto 0) := "011 0011";
+    constant LOGIC: std_logic_vector(6 downto 0) := "001 0011";
+    constant IMMEDIATE: std_logic_vector(6 downto 0) := "001 0011";
+    constant LOAD: std_logic_vector(6 downto 0) := "000 0011";
+    constant STORE: std_logic_vector(6 downto 0) := "010 0011";
+    constant BRANCH: std_logic_vector(6 downto 0) := "110 0011";
+    constant SYS_CALL: std_logic_vector(6 downto 0) := "111 0011";
+
+    signal opcode: std_logic_vector(6 downto 0) := INSTRUCTION(6 downto 0);
+    signal funct3: std_logic_vector(2 downto 0) := INSTRUCTION(14 downto 12);
+    signal funct7: std_logic_vector(6 downto 0) := INSTRUCTION(31 downto 25);
 
     begin
-        process(CLK, RST) begin
-            if falling_edge(RST) then
-            end if;
-        end process;
-    end architecture;
-            
+        
+
+end architecture;    
