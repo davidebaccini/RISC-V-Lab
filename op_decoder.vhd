@@ -30,7 +30,8 @@ architecture behavioral of op_decoder is
     constant ADDI: std_logic_vector := "001 0011";
     constant LOAD: std_logic_vector := "000 0011";
     constant STORE: std_logic_vector := "010 0011";
-
+    constant FENCE: std_logic_vector := "000 1111"; --memory barrier
+    constant EBREAK: std_logic_vector := "111 0011"; --used to insert breakpoints in code for debugging
     begin
         process(CLK, RST) begin
             if falling_edge(RST) then
