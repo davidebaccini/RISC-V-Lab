@@ -19,7 +19,7 @@ end entity;
 
 architecture behavioral of op_decoder is
 
-    -- All opcodes that we will use in this architecture
+    -- All opcodes that we will use
     constant ARITH: std_logic_vector(6 downto 0) := "011 0011";
     constant LOGIC: std_logic_vector(6 downto 0) := "001 0011";
     constant IMMEDIATE: std_logic_vector(6 downto 0) := "001 0011";
@@ -27,7 +27,14 @@ architecture behavioral of op_decoder is
     constant STORE: std_logic_vector(6 downto 0) := "010 0011";
     constant BRANCH: std_logic_vector(6 downto 0) := "110 0011";
     constant JUMP: std_logic_vector(6 downto 0) := "110 1111";
-    --constant SYS_CALL: std_logic_vector(6 downto 0) := "111 0011";
+
+    -- All funct3 codes that we will use
+    constant ADD: std_logic_vector(2 downto 0) := "000";
+    constant ADDI: std_logic_vector(2 downto 0) := "001";
+    constant SUB: std_logic_vector(2 downto 0) := "010";
+    constant AND_LOGIC: std_logic_vector(2 downto 0) := "111";
+    constant OR_LOGIC: std_logic_vector(2 downto 0) := "110";
+    constant EXOR_LOGIC: std_logic_vector(2 downto 0) := "100";
 
     signal opcode: std_logic_vector(6 downto 0);
     signal funct3: std_logic_vector(2 downto 0);
@@ -64,6 +71,8 @@ architecture behavioral of op_decoder is
         end process;
 
         alu_opcode: process() begin
-            
+            case funct3 is
+                when ADD => 
+                    
 
 end architecture;
