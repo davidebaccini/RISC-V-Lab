@@ -48,5 +48,7 @@ begin
     end process;
 
 
+    --waiting for component "data memory"
+
 
 end architecture;
