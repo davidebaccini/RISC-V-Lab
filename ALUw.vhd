@@ -16,12 +16,12 @@ entity ALUw is
     --OP_codes
     alu_opcode : in std_logic_vector(2 downto 0);
 
-    --Flags
+    --flags
     C   : out std_logic; --Carry out
     V   : out std_logic; --Overflow 
     Neg : out std_logic; --Negative
     Z   : out std_logic; --Zero 
-    P   : out std_logic; --Parity (Paride, if odd even)
+    P   : out std_logic --Parity (Paride, if odd even)
 
   );
 end ALUw;
@@ -43,55 +43,49 @@ begin
     variable res : unsigned(N downto 0) := (others => '0');
 
   begin
-    case alu_opcode is -- 
 
-      when '000' => --ADD
+    case alu_opcode is
 
-        res := std_logic_vector( signed(A) + signed(B));
+      when "000" =>
+        res := unsigned(resize(signed(A), N + 1) + resize(signed(B), N + 1));
 
-      when '001' => --ADDI
+      when "001" =>
+        res := ('0' & unsigned(A)) + ('0' & unsigned(B));
 
-        res := std_logic_vector(to_unsigned(A) + to_unsigned(B));
+      when "010" =>
+        res := unsigned(resize(signed(A), N + 1) - resize(signed(B), N + 1));
 
-      when '010' => --SUB
+      when "111" =>
+        res(N - 1 downto 0) := unsigned(A and B);
 
-        res := std_logic_vector(signed(A) - signed(B));
+      when "110" =>
+        res(N - 1 downto 0) := unsigned(A or B);
 
-      when '111' => --AND
-
-        res := A and B;
-
-      when '110' => --OR
-
-        res := A or B;
-
-      when '100' => --EXOR
-
-        res := A xor B;
+      when "100" =>
+        res(N - 1 downto 0) := unsigned(A xor B);
 
       when others    =>
         res := (others => '0');
 
     end case;
 
-    O <= res(31 downto 0);
+    O   <= std_logic_vector(res(N - 1 downto 0));
 
-    C <= res(32 downto 32); --Carry out, for signed 
+    C   <= res(N);
 
-    V <= res(32 downto 32); --Overflow , for unsigned 
+    V   <= res(N) xor res(N - 1);
 
-    Neg <= res(32 downto 32); --Negative, if signed 
+    Neg <= res(N - 1);
 
-    if res(31 downto 0) == (others => '0') then --Check if 32 bits are 0, dont care for extra bit
-      Z <= 1;
+    P   <= res(0);
+
+    if res(N - 1 downto 0) = to_unsigned(0, N) then
+      Z <= '1';
 
     else
-
-      Z <= 0;
-
+      Z <= '0';
+      
     end if;
-
-    P <= res(0 downto 0); -- just check if last bit is 1, if it is its odd.
 
   end process;
 
