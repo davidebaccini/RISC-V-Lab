@@ -11,8 +11,8 @@ entity op_decoder is
         
         OP_CLASS:       out std_logic_vector(4 downto 0);
         ALU_OPCODE:     out std_logic_vector(2 downto 0);
-        A_SEL:          out std_logic;
-        B_SEL:          out std_logic;
+        PC_RS1_SEL:     out std_logic;                          -- Program Counter / Register1 select
+        IMM_RS2_SEL:    out std_logic;                          -- Immediate / Register2 select
         COND_OPCODE:    out std_logic_vector(2 downto 0)
     );
 end entity;
@@ -21,8 +21,7 @@ architecture behavioral of op_decoder is
 
     -- All opcodes that we will use
     constant ARITH: std_logic_vector(6 downto 0) := "011 0011";
-    constant LOGIC: std_logic_vector(6 downto 0) := "001 0011";
-    constant IMMEDIATE: std_logic_vector(6 downto 0) := "001 0011";
+    constant LOGIC_IMMEDIATE: std_logic_vector(6 downto 0) := "001 0011";
     constant LOAD: std_logic_vector(6 downto 0) := "000 0011";
     constant STORE: std_logic_vector(6 downto 0) := "010 0011";
     constant BRANCH: std_logic_vector(6 downto 0) := "110 0011";
@@ -44,17 +43,20 @@ architecture behavioral of op_decoder is
         opcode <= INSTRUCTION(6 downto 0);
         funct3 <= INSTRUCTION(14 downto 12);
         funct7 <= INSTRUCTION(31 downto 25);
+        
+        ALU_OPCODE <= funct3;
 
-        opcode: process() begin
+        opcode: process begin
             case opcode is
                 when ARITH => 
                     OP_CLASS <= "1 0000";
 
-                when LOGIC => 
+                when LOGIC_IMMEDIATE => 
                     OP_CLASS <= "1 0000";
-
-                when IMMEDIATE => 
-                    OP_CLASS <= "1 0000";
+                    if funct3 = ADDI then
+                        IMM_RS2_SEL <= '1';
+                    else
+                        IMM_RS2_SEL <= '0';
 
                 when STORE => 
                     OP_CLASS <= "0 1000"; 
@@ -69,10 +71,5 @@ architecture behavioral of op_decoder is
                     OP_CLASS <= "0 0001";
             end case;
         end process;
-
-        alu_opcode: process() begin
-            case funct3 is
-                when ADD => 
-                    
 
 end architecture;
