@@ -84,7 +84,7 @@ begin
 
     else
       Z <= '0';
-      
+
     end if;
 
   end process;
